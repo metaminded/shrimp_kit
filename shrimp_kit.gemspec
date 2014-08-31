@@ -6,7 +6,8 @@ Gem::Specification.new do |s|
   s.description = "ShrimpKit is a basic html renderer for Prawn."
   s.authors     = ["Peter Horn"]
   s.email       = 'ph@metaminded.com'
-  s.files       = ["lib/shrimp_kit.rb"]
+  s.files       = Dir["{lib}/**/*", "MIT-LICENSE", "README.md"]
+
   s.homepage    =
     'http://github.com/metaminded/shrimp_kit'
   s.license       = 'MIT'
