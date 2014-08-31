@@ -57,7 +57,6 @@ module ShrimpKit
 
     def render_private_block(pdf, list:)
       as = full_styles
-      puts "BLOCK: #{self}\n       #{list.join("\n        ")}"
       pdf.formatted_text(list) if list.present?
       pdf.move_down as[:margin_top]
       pdf.indent as[:margin_left] do
@@ -71,14 +70,11 @@ module ShrimpKit
     end
 
     def render_private_inline(pdf, list:)
-      puts "INLINE: #{self}\n       #{list.join("\n        ")}"
       as = full_styles
       list << for_formatted_text if text
-      cc = children.inject(list) do |a,e|
+      children.inject(list) do |a,e|
         e.render_private(pdf, list: a)
       end
-      puts "AFTER INLINE: #{cc}"
-      cc
     end
 
     def for_formatted_text
