@@ -1,6 +1,6 @@
-require 'actionpack'
-require 'prawn/measurement_extensions'
+require 'action_pack'
 require 'prawn'
+require 'prawn/measurement_extensions'
 
 module ShrimpKit
   DEMO2 = <<-HTML
