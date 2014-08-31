@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'ShrimpKit'
+  s.name        = 'shrimp_kit'
   s.version     = '0.0.1'
   s.date        = '2014-09-01'
   s.summary     = "ShrimpKit is a basic html renderer for Prawn"
