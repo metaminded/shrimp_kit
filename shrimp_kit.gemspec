@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
     'http://github.com/metaminded/shrimp_kit'
   s.license       = 'MIT'
 
-  s.add_dependency "prawn",       ">= 0.12.0"
+  s.add_dependency "prawn",           ">= 1.2.0"
+  s.add_dependency "prawn-table",     ">= 0.1.1"
   s.add_dependency "active_support",  ">= 4.0.0"
 end

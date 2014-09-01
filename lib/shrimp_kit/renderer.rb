@@ -6,7 +6,7 @@ module ShrimpKit
       @html_raw = str
       @html = Nokogiri::HTML.parse(str)
       @body = @html / 'html/body'
-      @container = Element.new(type: :body, parent: nil)
+      @container = Element.new(node: @body, type: :body, parent: nil)
       NodeProcessor.process @body.children, @container
     end
 

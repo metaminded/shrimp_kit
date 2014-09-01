@@ -1,5 +1,9 @@
+gem 'prawn'
+gem 'prawn-table'
+
 require 'active_support/all'
 require 'prawn'
+require 'prawn/table'
 require 'nokogiri'
 require 'prawn/measurement_extensions'
 
@@ -31,7 +35,13 @@ module ShrimpKit
       </ul>
       <li>Hurz!</li>
     </ul>
-    <p>Und <a href="/foo">Linx</a> gehen (irgendwann) auch!</p>
+    <i><p>Hier ist mal die Reihenfolge umgekehrt. Also i aussen, und p innen.</p></i>
+    <h3>Noch 'ne Tabelle:</h3>
+    <table>
+      <tr><th><b>Dings</b></th><th>Bums!</th></tr>
+      <tr><td><i>Foo</i></td><td>Bar!</td></tr>
+    </table>
+
   HTML
 
   def self.to_pdf_file(filename, html)
@@ -42,7 +52,9 @@ end
 
 require_relative './shrimp_kit/default_styles'
 require_relative './shrimp_kit/element'
+require_relative './shrimp_kit/table_element'
 require_relative './shrimp_kit/node_processor'
+require_relative './shrimp_kit/table_node_processor'
 require_relative './shrimp_kit/renderer'
 require_relative './shrimp_kit/prawn_extension'
 

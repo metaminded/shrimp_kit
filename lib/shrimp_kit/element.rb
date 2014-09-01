@@ -1,10 +1,11 @@
 module ShrimpKit
   class Element
 
-    attr_accessor :styles, :parent, :children, :text
+    attr_accessor :styles, :parent, :children, :text, :type, :node
 
-    def initialize(type:, parent:, text: nil, styles: {}, bullet: nil)
+    def initialize(node:, type:, parent:, text: nil, styles: {}, bullet: nil)
       @type = type.to_sym
+      @node = node
       raise "Unsupported html tag »#{@type}«" unless DEFAULT_STYLES.has_key? @type
       @text = text
       @parent = parent
@@ -27,7 +28,7 @@ module ShrimpKit
     end
 
     def all_styles()
-      @_all_styles ||= (parent ? parent.all_styles.merge(styles) : styles)
+      @_all_styles ||= (parent.try(:all_styles) || {}).merge(styles)
     end
 
     def full_styles

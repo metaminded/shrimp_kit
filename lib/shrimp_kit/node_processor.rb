@@ -16,6 +16,7 @@ module ShrimpKit
       end
 
       def process_node(node, current_container)
+        # puts "#{node.name}"
         e = if respond_to?("process_#{node.name}_node")
           send("process_#{node.name}_node", node, current_container)
         else
@@ -26,13 +27,15 @@ module ShrimpKit
 
       def process_default_node(node, current_container)
         Element.new(
+          node: node,
           type: node.name,
           parent: current_container
         )
       end
 
       def process_br_node(node, current_container)
-        e = Element.new(
+        Element.new(
+          node: node,
           type: :_text_,
           text: "\n",
           parent: current_container
@@ -41,8 +44,10 @@ module ShrimpKit
       end
 
       def process_text_node(node, current_container)
+        # puts "_text_: #{node.text}"
         return if node.text.blank?
-        e = Element.new(
+        Element.new(
+          node: node,
           type: :_text_,
           text: node.text.try(:gsub, /\s+/, ' '),
           parent: current_container
@@ -61,6 +66,7 @@ module ShrimpKit
       def process_li_node(node, current_container)
         @li_count[@ul_depth] += 1
         Element.new(
+          node: node,
           type: node.name,
           parent: current_container,
           bullet: ShrimpKit::BULLETS[@ul_depth - 1]

@@ -29,6 +29,13 @@ module ShrimpKit
       margin_top: 4.mm,
       margin_bottom: 1.mm
     },
+    h3: {
+      display: :block,
+      font_size: 12.pt,
+      font_weight: :bold,
+      margin_top: 2.mm,
+      margin_bottom: 1.mm
+    },
     p: {
       display: :block,
       margin_bottom: 2.mm
@@ -63,6 +70,13 @@ module ShrimpKit
       margin_left: 4.mm
 
     },
+    table: {},
+    tbody: {},
+    thead: {},
+    tfood: {},
+    tr: {},
+    td: {},
+    th: {},
     _text_: {
       display: :inline
     }
