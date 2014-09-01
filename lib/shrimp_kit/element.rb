@@ -3,13 +3,14 @@ module ShrimpKit
 
     attr_accessor :styles, :parent, :children, :text
 
-    def initialize(type:, parent:, text: nil, styles: {})
+    def initialize(type:, parent:, text: nil, styles: {}, bullet: nil)
       @type = type.to_sym
       raise "Unsupported html tag »#{@type}«" unless DEFAULT_STYLES.has_key? @type
       @text = text
       @parent = parent
       @parent.children << self if @parent
       @children = []
+      @bullet = bullet
       # binding.pry
       @styles = DEFAULT_STYLES[@type].merge(styles)
     end
@@ -44,7 +45,6 @@ module ShrimpKit
 
     def render(pdf)
       l = render_private(pdf, list: [])
-      puts l.inspect
     end
 
     def render_private(pdf, list:)
@@ -59,7 +59,12 @@ module ShrimpKit
       as = full_styles
       pdf.formatted_text(list) if list.present?
       pdf.move_down as[:margin_top]
-      pdf.indent as[:margin_left] do
+      if @bullet.present?
+        c = pdf.cursor
+        pdf.text @bullet
+        pdf.move_up c - pdf.cursor
+      end
+      pdf.indent @styles[:margin_left] || 0 do
         l = children.inject([]) do |a, e|
           e.render_private(pdf, list: a)
         end

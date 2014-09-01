@@ -1,4 +1,6 @@
 module ShrimpKit
+  BULLETS = ["–", "•", "◦", "▸", "✦", "□"]
+
   DEFAULT_STYLES = {
     '*' => {
       display: :inline,
@@ -19,6 +21,13 @@ module ShrimpKit
       font_weight: :bold,
       margin_top: 6.mm,
       margin_bottom: 3.mm
+    },
+    h2: {
+      display: :block,
+      font_size: 14.pt,
+      font_weight: :bold,
+      margin_top: 4.mm,
+      margin_bottom: 1.mm
     },
     p: {
       display: :block,
@@ -43,6 +52,16 @@ module ShrimpKit
     a: {
       display: :inline,
       font_weight: :underline
+    },
+    ul: {
+      display: :block,
+      margin_top: 1.mm,
+      margin_bottom: 1.mm
+    },
+    li: {
+      display: :block,
+      margin_left: 4.mm
+
     },
     _text_: {
       display: :inline

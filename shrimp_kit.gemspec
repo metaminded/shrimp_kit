@@ -13,5 +13,5 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
 
   s.add_dependency "prawn",       ">= 0.12.0"
-  s.add_dependency "actionpack",  ">= 4.0.0"
+  s.add_dependency "active_support",  ">= 4.0.0"
 end
