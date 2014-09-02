@@ -12,11 +12,15 @@ And... How to use?
 
 either "directly":
 
-  ShrimpKit.to_pdf_file('/Users/hornp/Desktop/foo.pdf', "<i>some html</i>")
+<pre>
+  ShrimpKit.to_pdf_file('/Users/hornp/Desktop/foo.pdf', "&lt;i&gt;some html&lt;/i&gt;")
+</pre>
 
 or within a prawn document:
 
-  pdf.html_formatted_text("<i>some html</i>")
+<pre>
+  pdf.html_formatted_text("&lt;i&gt;some html&lt;/i&gt;")
+</pre>
 
 Tag Support?
 ------------
