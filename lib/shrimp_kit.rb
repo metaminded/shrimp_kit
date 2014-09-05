@@ -61,6 +61,8 @@ module ShrimpKit
       </ol>
       <li>Hurz!</li>
     </ol>
+    <h2>Bilder?</h2>
+    <img src='/private/foo.jpg' />
 
   HTML
 
@@ -72,9 +74,7 @@ end
 
 require_relative './shrimp_kit/default_styles'
 require_relative './shrimp_kit/element'
-require_relative './shrimp_kit/table_element'
 require_relative './shrimp_kit/node_processor'
-require_relative './shrimp_kit/table_node_processor'
 require_relative './shrimp_kit/renderer'
 require_relative './shrimp_kit/prawn_extension'
 

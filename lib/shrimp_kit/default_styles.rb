@@ -82,6 +82,9 @@ module ShrimpKit
       margin_left: 10.mm
 
     },
+    img: {
+      display: :block
+    },
     table: {},
     tbody: {},
     thead: {},

@@ -3,6 +3,14 @@ module ShrimpKit
 
     attr_accessor :styles, :parent, :children, :text, :type, :node
 
+    def self.create(args)
+      if args[:type].to_s == 'img'
+        ImageElement.new(args)
+      else
+        Element.new(args)
+      end
+    end
+
     def initialize(node:, type:, parent:, text: nil, styles: {}, bullet: nil)
       @type = type.to_sym
       @node = node
@@ -88,3 +96,6 @@ module ShrimpKit
     end
   end # Element
 end # ShrimpKit
+
+require_relative './elements/table_element'
+require_relative './elements/image_element'
