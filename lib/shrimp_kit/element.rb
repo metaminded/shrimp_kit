@@ -52,8 +52,9 @@ module ShrimpKit
       }
     end
 
-    def render(pdf)
-      l = render_private(pdf, list: [])
+    def render(pdf, list: [], options: {})
+      @options = options
+      l = render_private(pdf, list: list)
     end
 
     def render_private(pdf, list:)
@@ -75,7 +76,7 @@ module ShrimpKit
       end
       pdf.indent @styles[:margin_left] || 0 do
         l = children.inject([]) do |a, e|
-          e.render_private(pdf, list: a)
+          e.render(pdf, list: a, options: @options)
         end
         pdf.formatted_text l if l.present?
       end
@@ -87,7 +88,7 @@ module ShrimpKit
       as = full_styles
       list << for_formatted_text if text
       children.inject(list) do |a,e|
-        e.render_private(pdf, list: a)
+        e.render(pdf, list: a, options: @options)
       end
     end
 

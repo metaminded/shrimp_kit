@@ -8,8 +8,12 @@ module ShrimpKit
       @parent.children << self if @parent
     end
 
-    def render_private(pdf, list:)
-      pdf.text node['src']
+    def render(pdf, list:, options: {})
+      size = options[:image_size] || 5.cm
+      position = options[:image_position] || :center
+      pdf.image File.join((options[:image_path] || '.'), node['src']),
+        fit: [size, size],
+        position: position
       nil
     end
 

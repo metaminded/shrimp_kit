@@ -9,7 +9,7 @@ module ShrimpKit
       @table_holder = table_holder
     end
 
-    def render_private(pdf, list:)
+    def render(pdf, list:, options: {})
       cell_styles = {}
       ll = table_holder.rows.map.with_index do |row, i|
         row.children.map.with_index do |cell, j|

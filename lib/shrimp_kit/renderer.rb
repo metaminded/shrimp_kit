@@ -9,14 +9,14 @@ module ShrimpKit
       @container = NodeProcessor.process @body
     end
 
-    def to_file(filename)
+    def to_file(filename, options={})
       Prawn::Document.generate(filename) do |pdf|
-        add_to_pdf(pdf)
+        add_to_pdf(pdf, options)
       end
     end
 
-    def add_to_pdf(pdf)
-      @container.render(pdf)
+    def add_to_pdf(pdf, options={})
+      @container.render(pdf, options)
     end
   end
 end
