@@ -72,7 +72,12 @@ module ShrimpKit
       if @bullet.present?
         c = pdf.cursor
         pdf.text @bullet
-        pdf.move_up c - pdf.cursor
+        cc = pdf.cursor
+        if cc < c
+          pdf.move_up (c - pdf.cursor).abs
+        else
+          pdf.move_up (pdf.bounds.top_left[1] - pdf.cursor)
+        end
       end
       pdf.indent @styles[:margin_left] || 0 do
         l = children.inject([]) do |a, e|
