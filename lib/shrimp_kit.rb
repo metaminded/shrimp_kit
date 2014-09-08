@@ -8,11 +8,6 @@ require 'nokogiri'
 require 'prawn/measurement_extensions'
 
 module ShrimpKit
-  DEMO = <<-HTML
-
-
-  HTML
-
   def self.to_pdf_file(filename, html, options: {})
     renderer = Renderer.new(html)
     renderer.to_file(filename, options: options)
@@ -22,6 +17,7 @@ end
 require_relative './shrimp_kit/default_styles'
 require_relative './shrimp_kit/element'
 require_relative './shrimp_kit/node_processor'
+require_relative './shrimp_kit/css_processor'
 require_relative './shrimp_kit/renderer'
 require_relative './shrimp_kit/prawn_extension'
 

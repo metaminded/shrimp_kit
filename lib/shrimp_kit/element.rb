@@ -1,27 +1,26 @@
 module ShrimpKit
   class Element
 
-    attr_accessor :styles, :parent, :children, :text, :type, :node
+    attr_accessor :parent, :children, :text, :type, :node, :styles
 
     def self.create(args)
-      if args[:type].to_s == 'img'
-        ImageElement.new(args)
-      else
-        Element.new(args)
+      case args[:type].to_s
+      when 'img' then ImageElement.new(args)
+      when 'table' then TableElement.new(args)
+      else Element.new(args)
       end
     end
 
-    def initialize(node:, type:, parent:, text: nil, styles: {}, bullet: nil)
-      @type = type.to_sym
+    def initialize(node:, type:, parent:, text: nil, bullet: nil)
+      @type = type.to_s
       @node = node
-      raise "Unsupported html tag »#{@type}«" unless DEFAULT_STYLES.has_key? @type
+      raise "Unsupported html tag »#{@type}«" unless ALLOWED_TAGS.member? @type
       @text = text
       @parent = parent
       @parent.children << self if @parent
       @children = []
       @bullet = bullet
-      # binding.pry
-      @styles = DEFAULT_STYLES[@type].merge(styles)
+      @styles = YAML.parse(node['-shrimp-kit-styles'].presence || "--- {}\n").to_ruby
     end
 
     def inspect
@@ -32,23 +31,19 @@ module ShrimpKit
     def empty?() children.present? end
 
     def block_element?()
-      @_block_element = (full_styles[:display] == :block)
+      @_block_element = (@styles['display'] == "block")
     end
 
-    def all_styles()
-      @_all_styles ||= (parent.try(:all_styles) || {}).merge(styles)
-    end
-
-    def full_styles
-      @_full_styles ||= DEFAULT_STYLES['*'].merge all_styles
-    end
+   def all_styles()
+     @_all_styles ||= (parent.try(:all_styles) || {}).merge(styles)
+   end
 
     def prawn_styles
-      as = full_styles
+      as = all_styles
       {
-        styles: [as[:font_style], as[:font_weight]].reject{|s| s==:normal}.compact,
-        color: as[:text_color],
-        size: as[:font_size]
+        styles: [as['font-style'].try(:to_sym), as['font-weight'].try(:to_sym)].reject{|s| s == :normal}.compact,
+        color: as['color'],
+        size: as['font-size']
       }
     end
 
@@ -66,9 +61,10 @@ module ShrimpKit
     end
 
     def render_private_block(pdf, list:)
-      as = full_styles
+      as = all_styles
+      # puts ">> #{list.count}"
       pdf.formatted_text(list) if list.present?
-      pdf.move_down as[:margin_top]
+      pdf.move_down @styles['margin-top']
       if @bullet.present?
         c = pdf.cursor
         pdf.text @bullet
@@ -79,18 +75,19 @@ module ShrimpKit
           pdf.move_up (pdf.bounds.top_left[1] - pdf.cursor)
         end
       end
-      pdf.indent @styles[:margin_left] || 0 do
+      pdf.indent @styles['margin-left'] || 0 do
         l = children.inject([]) do |a, e|
           e.render(pdf, list: a, options: @options)
         end
         pdf.formatted_text l if l.present?
       end
-      pdf.move_down as[:margin_bottom]
+      pdf.move_down @styles['margin-bottom']
       []
     end
 
     def render_private_inline(pdf, list:)
-      as = full_styles
+      as = all_styles
+      # puts "#{type} #{for_formatted_text}" if text
       list << for_formatted_text if text
       children.inject(list) do |a,e|
         e.render(pdf, list: a, options: @options)

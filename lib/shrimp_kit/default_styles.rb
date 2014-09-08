@@ -1,99 +1,115 @@
 module ShrimpKit
-  BULLETS = ["–", "•", "◦", "▸", "✦", "□"]
 
-  DEFAULT_STYLES = {
-    '*' => {
-      display: :inline,
-      font_size: 11.pt,
-      font_weight: :normal,
-      font_style: :normal,
-      margin_top: 0,
-      margin_bottom: 0,
-      margin_left: 0,
-      text_color: '000000'
-    },
-    body: {
-      display: :block
-    },
-    h1: {
-      display: :block,
-      font_size: 16.pt,
-      font_weight: :bold,
-      margin_top: 6.mm,
-      margin_bottom: 3.mm
-    },
-    h2: {
-      display: :block,
-      font_size: 14.pt,
-      font_weight: :bold,
-      margin_top: 4.mm,
-      margin_bottom: 1.mm
-    },
-    h3: {
-      display: :block,
-      font_size: 12.pt,
-      font_weight: :bold,
-      margin_top: 2.mm,
-      margin_bottom: 1.mm
-    },
-    h4: {
-      display: :block,
-      font_size: 11.pt,
-      font_weight: :bold,
-      margin_top: 2.mm,
-      margin_bottom: 1.mm
-    },
-    p: {
-      display: :block,
-      margin_bottom: 2.mm
-    },
-    div: {
-      display: :block,
-      margin_bottom: 2.mm,
-      margin_left: 1.cm
-    },
-    br: {
-      display: :inline
-    },
-    i: {
-      display: :inline,
-      font_style: :italic
-    },
-    b: {
-      display: :inline,
-      font_weight: :bold
-    },
-    a: {
-      display: :inline,
-      font_weight: :underline
-    },
-    ul: {
-      display: :block,
-      margin_top: 1.mm,
-      margin_bottom: 1.mm
-    },
-    ol: {
-      display: :block,
-      margin_top: 1.mm,
-      margin_bottom: 1.mm
-    },
-    li: {
-      display: :block,
-      margin_left: 10.mm
+  BULLETS = %w{– • ◦ ▸ ✦ □}
 
-    },
-    img: {
-      display: :block
-    },
-    table: {},
-    tbody: {},
-    thead: {},
-    tfood: {},
-    tr: {},
-    td: {},
-    th: {},
-    _text_: {
-      display: :inline
-    }
+  ALLOWED_TAGS = %w{
+    body _text_
+    h1 h2 h3 h4
+    p div br
+    a
+    i em b strong
+    ul ol li
+    table tbody thead tfoot tr td th
+    img
   }
+
+  DEFAULT_STYLES = <<-CSS
+    * {
+      display: inline;
+      font-size: 11pt;
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: 0;
+      color: #000000
+    }
+    body {
+      display: block;
+    }
+    h1 {
+      display: block;
+      font-size: 16pt;
+      font-weight: bold;
+      margin-top: 6mm;
+      margin-bottom: 3mm
+    }
+    h2 {
+      display: block;
+      font-size: 14pt;
+      font-weight: bold;
+      margin-top: 4mm;
+      margin-bottom: 1mm
+    }
+    h3 {
+      display: block;
+      font-size: 12pt;
+      font-weight: bold;
+      margin-top: 2mm;
+      margin-bottom: 1mm
+    }
+    h4 {
+      display: block;
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 2mm;
+      margin-bottom: 1mm
+    }
+    p {
+      display: block;
+      margin-bottom: 2mm
+    }
+    div {
+      display: block;
+      margin-bottom: 2mm;
+      margin-left: 1cm
+    }
+    br {
+      display: inline
+    }
+    i {
+      display: inline;
+      font-style: italic
+    }
+    em {
+      display: inline;
+      font-style: italic
+    }
+    b {
+      display: inline;
+      font-weight: bold
+    }
+    strong {
+      display: inline;
+      font-weight: bold
+    }
+    a {
+      display: inline;
+      font-weight: underline
+    }
+    ul {
+      display: block;
+      margin-top: 1mm;
+      margin-bottom: 1mm
+    }
+    ol {
+      display: block;
+      margin-top: 1mm;
+      margin-bottom: 1mm
+    }
+    li {
+      display: block;
+      margin-left: 20mm    }
+    img {
+      display: block
+    }
+    table {}
+    tbody {}
+    thead {}
+    tfoot {}
+    tr {}
+    td {}
+    th {}
+    _text_ {
+      display: inline
+    }
+  CSS
 end

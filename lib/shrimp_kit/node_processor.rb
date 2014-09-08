@@ -1,8 +1,10 @@
 module ShrimpKit
   class NodeProcessor
 
-    def self.process(body)
+    def self.process(body, css_files: [])
       container = Element.new(node: body, type: :body, parent: nil)
+      @css = CssProcessor.new(ShrimpKit::DEFAULT_STYLES)
+      @css.apply_to(body)
       new().process(body.children, container)
       container
     end
@@ -21,6 +23,7 @@ module ShrimpKit
         case node
         when Nokogiri::XML::Element then process_node(node, container)
         when Nokogiri::XML::Text then process_text_node(node, container)
+        when Nokogiri::XML::Comment then "do nothing"
         else raise "HELP! A #{node.class}, kill it!"
         end
       end
@@ -65,10 +68,8 @@ module ShrimpKit
       )
     end
 
-    require_relative './node_processors/table_node_processor'
     require_relative './node_processors/list_node_processor'
 
-    include TableNodeProcessor
     include ListNodeProcessor
   end # NodeProcessor
 end # ShrimpKit

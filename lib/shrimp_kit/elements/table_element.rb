@@ -1,25 +1,25 @@
 module ShrimpKit
-  class TableElement
+  class TableElement < Element
     attr_accessor :parent, :node, :table_holder
 
-    def initialize(node:, parent:, table_holder:)
-      @node = node
-      @parent = parent
-      @parent.children << self if @parent
-      @table_holder = table_holder
+    def initialize(node:, type:, parent:, text: nil, bullet: nil)
+      super
     end
 
     def render(pdf, list:, options: {})
       cell_styles = {}
-      ll = table_holder.rows.map.with_index do |row, i|
+      ll = children.map.with_index do |row, i|
         row.children.map.with_index do |cell, j|
-          cell_styles[[i,j]] = cell.prawn_styles
+          styles = cell.children.inject({}) do |a,e| a.merge e.prawn_styles end
+          cell_styles[[i,j]] = styles
+          # puts "#{cell.node.text}:#{cell.type} => #{styles}"
           cell.node.text
         end
       end
       pdf.table ll do
         cell_styles.each do |(i,j),s|
           # puts "#{i} #{j} #{s}"
+          # puts s.inspect
           row(i).column(j).font_style = s[:styles].first
         end
       end

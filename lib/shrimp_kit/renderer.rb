@@ -2,11 +2,11 @@ module ShrimpKit
   class Renderer
     attr_accessor :container
 
-    def initialize(str)
+    def initialize(str, css_files: [])
       @html_raw = str
       @html = Nokogiri::HTML.parse(str)
-      @body = @html / 'html/body'
-      @container = NodeProcessor.process @body
+      @body = (@html / 'html/body').first
+      @container = NodeProcessor.process @body, css_files: css_files
     end
 
     def to_file(filename, options={})
