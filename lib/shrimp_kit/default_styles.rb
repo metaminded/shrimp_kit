@@ -55,7 +55,8 @@ module ShrimpKit
     }
     p {
       display: block;
-      margin-bottom: 2mm
+      margin-bottom: 2mm;
+      text-align: justify;
     }
     div {
       display: block;

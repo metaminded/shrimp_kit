@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_dependency "prawn-table",     ">= 0.1.1"
   s.add_dependency "active_support",  ">= 4.0.0"
   s.add_dependency "csspool",         ">= 4.0.0"
+  s.add_dependency "text-hyphen",     ">= 1.4.0"
 end

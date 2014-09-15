@@ -1,3 +1,5 @@
+require 'text/hyphen'
+
 module ShrimpKit
   class Element
 
@@ -21,6 +23,7 @@ module ShrimpKit
       @children = []
       @bullet = bullet
       @styles = YAML.parse(node['-shrimp-kit-styles'].presence || "--- {}\n").to_ruby
+      @hyphenator = Text::Hyphen.new(:language => "de", :left => 0, :right => 0)
     end
 
     def inspect
@@ -62,8 +65,9 @@ module ShrimpKit
 
     def render_private_block(pdf, list:)
       as = all_styles
-      # puts ">> #{list.count}"
-      pdf.formatted_text(list) if list.present?
+      if list.present?
+        render_formatted_text(pdf, list, {align: (all_styles['text-align'] || :left).to_sym})
+      end
       pdf.move_down @styles['margin-top']
       if @bullet.present?
         c = pdf.cursor
@@ -79,7 +83,8 @@ module ShrimpKit
         l = children.inject([]) do |a, e|
           e.render(pdf, list: a, options: @options)
         end
-        pdf.formatted_text l if l.present?
+        render_formatted_text(pdf, l, {align: (all_styles['text-align'] || :left).to_sym}) if l.present?
+        # pdf.formatted_text(l, {align: (@styles['text-align'] || :left).to_sym}) if l.present?
       end
       pdf.move_down @styles['margin-bottom']
       []
@@ -87,11 +92,31 @@ module ShrimpKit
 
     def render_private_inline(pdf, list:)
       as = all_styles
-      # puts "#{type} #{for_formatted_text}" if text
       list << for_formatted_text if text
       children.inject(list) do |a,e|
         e.render(pdf, list: a, options: @options)
       end
+    end
+
+    def render_formatted_text(pdf, list, options)
+      if options[:align] == :justify && list.count == 1
+        list.map! do |elem|
+          words = elem[:text].split(' ')
+          leading_whitespace = elem[:text].count(' ') - elem[:text].lstrip.count(' ')
+          ending_whitespace  = elem[:text].count(' ') - elem[:text].rstrip.count(' ')
+          words.map! do |word|
+            breaks = @hyphenator.hyphenate(word)
+            breaks.reverse.each do |b|
+              word = word.insert(b, "#{Prawn::Text::SHY}")
+            end
+            word
+          end
+          elem[:text] = ' ' * leading_whitespace + words.join(' ') + ' ' * ending_whitespace
+          elem
+        end
+      end
+
+      pdf.formatted_text(list, options)
     end
 
     def for_formatted_text
