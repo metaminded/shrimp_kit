@@ -8,6 +8,11 @@ require 'nokogiri'
 require 'prawn/measurement_extensions'
 
 module ShrimpKit
+  # possible options:
+  # image_path: path to images
+  # image_position: html image position flags
+  # image_size:
+  # language: Language for hyphenation (used in justified blocks)
   def self.to_pdf_file(filename, html, options: {})
     renderer = Renderer.new(html, css_files: options[:css_files])
     renderer.to_file(filename, options)
