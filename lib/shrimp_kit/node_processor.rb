@@ -3,7 +3,10 @@ module ShrimpKit
 
     def self.process(body, css_files: [])
       container = Element.new(node: body, type: :body, parent: nil)
-      @css = CssProcessor.new(ShrimpKit::DEFAULT_STYLES)
+      custom_css = css_files.map do |css_file|
+                                   File.read(css_file)
+                                 end.join("\n")
+      @css = CssProcessor.new(ShrimpKit::DEFAULT_STYLES, custom_css)
       @css.apply_to(body)
       new().process(body.children, container)
       container

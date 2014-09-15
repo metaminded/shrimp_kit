@@ -9,7 +9,7 @@ require 'prawn/measurement_extensions'
 
 module ShrimpKit
   def self.to_pdf_file(filename, html, options: {})
-    renderer = Renderer.new(html)
+    renderer = Renderer.new(html, css_files: options[:css_files])
     renderer.to_file(filename, options: options)
   end
 end
