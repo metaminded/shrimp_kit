@@ -23,7 +23,6 @@ module ShrimpKit
       @children = []
       @bullet = bullet
       @styles = YAML.parse(node['-shrimp-kit-styles'].presence || "--- {}\n").to_ruby
-      @hyphenator = Text::Hyphen.new(:language => "de", :left => 0, :right => 0)
     end
 
     def inspect
@@ -98,6 +97,10 @@ module ShrimpKit
       end
     end
 
+    def hyphenator
+      @_hyphenator = Text::Hyphen.new(language: @options[:language] || 'de', left: 0, right: 0)
+    end
+
     def render_formatted_text(pdf, list, options)
       if options[:align] == :justify && list.count == 1
         list.map! do |elem|
@@ -105,7 +108,7 @@ module ShrimpKit
           leading_whitespace = elem[:text].count(' ') - elem[:text].lstrip.count(' ')
           ending_whitespace  = elem[:text].count(' ') - elem[:text].rstrip.count(' ')
           words.map! do |word|
-            breaks = @hyphenator.hyphenate(word)
+            breaks = hyphenator.hyphenate(word)
             breaks.reverse.each do |b|
               word = word.insert(b, "#{Prawn::Text::SHY}")
             end

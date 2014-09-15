@@ -16,7 +16,7 @@ module ShrimpKit
     end
 
     def add_to_pdf(pdf, options={})
-      @container.render(pdf, options)
+      @container.render(pdf, options: options)
     end
   end
 end
