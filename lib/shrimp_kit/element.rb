@@ -91,7 +91,10 @@ module ShrimpKit
 
     def render_private_inline(pdf, list:)
       as = all_styles
-      list << for_formatted_text if text
+      # puts "<type> = <#{@type}>"
+      # puts "<text> = <#{text}>"
+      # puts "list = <#{list}>"
+      list << for_formatted_text if text # && list
       children.inject(list) do |a,e|
         e.render(pdf, list: a, options: @options)
       end
@@ -102,7 +105,7 @@ module ShrimpKit
     end
 
     def render_formatted_text(pdf, list, options)
-      if options[:align] == :justify && list.count == 1
+      if options[:align] == :justify
         list.map! do |elem|
           words = elem[:text].split(' ')
           leading_whitespace = elem[:text].count(' ') - elem[:text].lstrip.count(' ')
@@ -118,7 +121,6 @@ module ShrimpKit
           elem
         end
       end
-
       pdf.formatted_text(list, options)
     end
 

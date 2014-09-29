@@ -61,8 +61,8 @@ module ShrimpKit
     end
 
     def process_text_node(node, current_container)
-      # puts "_text_: #{node.text}"
-      return if node.text.blank?
+      # puts "_text_: »#{node.text}« #{current_container}"
+      return if node.text.blank? && (current_container.children.blank? || ['body', 'table', 'tr'].include?(current_container.type))
       Element.create(
         node: node,
         type: :_text_,
