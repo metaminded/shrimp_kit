@@ -14,7 +14,12 @@ module ShrimpKit
   # image_size:
   # language: Language for hyphenation (used in justified blocks)
   def self.to_pdf_file(filename, html, options: {})
-    renderer = Renderer.new(html, css_files: options[:css_files])
+    custom_css = options[:css] || ''
+    custom_css += (options[:css_files] || []).map do |css_file|
+                                                    File.read(css_file)
+                                                  end.join("\n")
+
+    renderer = Renderer.new(html, custom_css: custom_css)
     renderer.to_file(filename, options)
   end
 end
