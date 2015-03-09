@@ -69,11 +69,11 @@ module ShrimpKit
       end
       pdf.move_down @styles['margin-top']
       if @bullet.present?
-        c = pdf.cursor
+        c = pdf.y
         pdf.text @bullet
-        cc = pdf.cursor
+        cc = pdf.y
         if cc < c
-          pdf.move_up (c - pdf.cursor).abs
+          pdf.move_up (c - pdf.y).abs
         else
           pdf.move_up (pdf.bounds.top_left[1] - pdf.cursor)
         end
