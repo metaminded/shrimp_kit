@@ -15,8 +15,8 @@ module ShrimpKit
 
     def initialize(node:, type:, parent:, text: nil, bullet: nil)
       @type = type.to_s
-      @node = node
       raise "Unsupported html tag »#{@type}«" unless ALLOWED_TAGS.member? @type
+      @node = node
       @text = text
       @parent = parent
       @parent.children << self if @parent

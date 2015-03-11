@@ -7,7 +7,7 @@ module ShrimpKit
     h1 h2 h3 h4
     p div br
     a
-    i em b strong
+    i em b strong u
     ul ol li
     table tbody thead tfoot tr td th
     img
@@ -81,6 +81,10 @@ module ShrimpKit
     strong {
       display: inline;
       font-weight: bold
+    }
+    u {
+      display: inline;
+      font-weight: underline;
     }
     a {
       display: inline;
