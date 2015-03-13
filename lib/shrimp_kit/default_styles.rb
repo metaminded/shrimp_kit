@@ -5,7 +5,7 @@ module ShrimpKit
   ALLOWED_TAGS = %w{
     body _text_
     h1 h2 h3 h4
-    p div br
+    p div br span
     a
     i em b strong u
     ul ol li
