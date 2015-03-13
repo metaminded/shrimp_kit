@@ -11,10 +11,14 @@ module ShrimpKit
     def render(pdf, list:, options: {})
       size = options[:image_size] || 5.cm
       position = options[:image_position] || :center
-      pdf.image File.join((options[:image_path] || '.'), node['src']),
-        fit: [size, size],
-        position: position
-      nil
+      if node['src'].present?
+        pdf.image File.join((options[:image_path] || '.'), node['src']),
+          fit: [size, size],
+          position: position
+        nil
+      else
+        []
+      end
     end
 
   end # TableElement
