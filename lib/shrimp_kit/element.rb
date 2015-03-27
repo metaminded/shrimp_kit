@@ -121,7 +121,7 @@ module ShrimpKit
           elem
         end
       end
-      pdf.formatted_text(list, options)
+      pdf.formatted_text(list, options.merge(@options))
     end
 
     def for_formatted_text
