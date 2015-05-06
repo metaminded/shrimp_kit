@@ -11,6 +11,7 @@ module ShrimpKit
     ul ol li
     table tbody thead tfoot tr td th
     img
+    s strike del
   }
 
   DEFAULT_STYLES = <<-CSS
@@ -105,6 +106,9 @@ module ShrimpKit
       margin-left: 20mm    }
     img {
       display: block
+    }
+    s, strike, del {
+      text-decoration: strikethrough
     }
     table {}
     tbody {}

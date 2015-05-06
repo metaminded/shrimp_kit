@@ -43,7 +43,7 @@ module ShrimpKit
     def prawn_styles
       as = all_styles
       {
-        styles: [as['font-style'].try(:to_sym), as['font-weight'].try(:to_sym)].reject{|s| s == :normal}.compact,
+        styles: [as['font-style'].try(:to_sym), as['font-weight'].try(:to_sym), as['text-decoration'].try(:to_sym)].reject{|s| s == :normal}.compact,
         color: as['color'],
         size: as['font-size']
       }
